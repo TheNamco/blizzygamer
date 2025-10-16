@@ -1,5 +1,6 @@
 // ---------- DEPENDENCIES ----------
 import 'dotenv/config';
+import express from 'express';
 import { 
   Client, 
   GatewayIntentBits, 
@@ -11,7 +12,7 @@ import fetch from "node-fetch";
 
 // ---------- CONFIG ----------
 const TOKEN = process.env.TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID; // Add your bot’s client ID in .env
+const CLIENT_ID = process.env.CLIENT_ID;
 const ROBLOX_COOKIE = process.env.ROBLOX_COOKIE;
 const TRACKED_USER_IDS = ["909635"];
 const TARGET_UNIVERSE_ID = 5750914919;
@@ -20,6 +21,12 @@ const DISCORD_CHANNEL_ID = "1428208748513595392";
 
 const lastStatus = new Map();
 let csrfToken = null;
+
+// ---------- EXPRESS SERVER (for Render Port) ----------
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.get('/', (req, res) => res.send('🤖 Discord Bot is running'));
+app.listen(PORT, () => console.log(`🌐 Express server listening on port ${PORT}`));
 
 // ---------- Get CSRF Token ----------
 async function getCsrfToken() {
